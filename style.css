@@ -64,11 +64,11 @@ body {
     }
 
     100% {
-        border-color: #ccc;
+        border-color: lightsteelblue;
     }
 }
 
-.spiral {
+.loader {
     font-size: 30px;
     animation: spin 1.5s linear infinite;
 }
