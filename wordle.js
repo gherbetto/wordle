@@ -1,5 +1,6 @@
 const letters = document.querySelectorAll('.wordboard-letter');
 const loadingDiv = document.querySelector('.loader');
+const firework = document.getElementById('firework');
 const ANSWER_LENGTH = 5;
 const ROUNDS = 6;
 const brand = document.querySelector('.brand');
@@ -39,7 +40,7 @@ async function init() {
         setLoading(true);
         const res = await fetch("https://words.dev-apis.com/validate-word", {
             method: "POST",
-            body: JSON.stringify({ word: currentGuess })
+            body: JSON.stringify({word: currentGuess})
         });
 
         const resObj = await res.json();
@@ -81,6 +82,7 @@ async function init() {
             // win
             brand.textContent = "You Win!";
             brand.classList.add("win");
+            firework.classList.add("firework");
             done = true;
         } else if (currentRow === ROUNDS) {
             alert(`you lost, the word was ${word}`);
@@ -95,9 +97,15 @@ async function init() {
         // makes the letterbox become an empty string
         letters[ANSWER_LENGTH * currentRow + currentGuess.length].innerText = "";
     }
-    
+
     function markInvalidWord() {
-        alert('not a valid word!');
+        for (let i = 0; i < ANSWER_LENGTH; i++) {
+            letters[currentRow * ANSWER_LENGTH + i].classList.remove("invalid");
+
+            setTimeout(function (){
+                letters[currentRow * ANSWER_LENGTH + i].classList.add("invalid");
+            }, 10);
+        }
     }
 
 
